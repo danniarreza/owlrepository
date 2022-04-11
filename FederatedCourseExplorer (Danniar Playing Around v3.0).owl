@@ -1,0 +1,1166 @@
+@prefix : <http://www.semanticweb.org/xhanid/ontologies/2022/2/federatedCourseExplorer#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.federatedcourseexplorer.org> .
+
+<http://www.federatedcourseexplorer.org> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.federatedcourseexplorer.org#attendedBy
+:attendedBy rdf:type owl:ObjectProperty ;
+            owl:inverseOf :attends ;
+            rdfs:domain :Course ;
+            rdfs:range :StudyProgram .
+
+
+###  http://www.federatedcourseexplorer.org#attends
+:attends rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :StudyProgram ;
+         rdfs:range :Course .
+
+
+###  http://www.federatedcourseexplorer.org#employedBy
+:employedBy rdf:type owl:ObjectProperty ;
+            owl:inverseOf :employs ;
+            rdfs:domain :Lecturer ;
+            rdfs:range :University .
+
+
+###  http://www.federatedcourseexplorer.org#employs
+:employs rdf:type owl:ObjectProperty ;
+         rdfs:domain :University ;
+         rdfs:range :Lecturer .
+
+
+###  http://www.federatedcourseexplorer.org#offeredBy
+:offeredBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :offers ;
+           rdfs:domain :StudyProgram ;
+           rdfs:range :University .
+
+
+###  http://www.federatedcourseexplorer.org#offers
+:offers rdf:type owl:ObjectProperty ;
+        rdfs:domain :University ;
+        rdfs:range :StudyProgram .
+
+
+###  http://www.federatedcourseexplorer.org#partOf
+:partOf rdf:type owl:ObjectProperty ;
+        rdfs:domain :University ;
+        rdfs:range <http://www.federatedcourseexplorer.org#4TU> .
+
+
+###  http://www.federatedcourseexplorer.org#teachedBy
+:teachedBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :teaches .
+
+
+###  http://www.federatedcourseexplorer.org#teaches
+:teaches rdf:type owl:ObjectProperty ;
+         rdfs:domain :Lecturer ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :teaches ;
+                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onClass :Course
+                     ] ;
+         rdfs:range :Course .
+
+
+###  http://www.w3.org/2002/07/owl#topObjectProperty
+owl:topObjectProperty rdfs:domain [ rdf:type owl:Restriction ;
+                                    owl:onProperty owl:topObjectProperty ;
+                                    owl:someValuesFrom <http://www.federatedcourseexplorer.org#4TU>
+                                  ] ;
+                      rdfs:range [ rdf:type owl:Restriction ;
+                                   owl:onProperty owl:topObjectProperty ;
+                                   owl:someValuesFrom :University
+                                 ] .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.federatedcourseexplorer.org#ORCID
+:ORCID rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Lecturer ,
+                   [ rdf:type owl:Restriction ;
+                     owl:onProperty :ORCID ;
+                     owl:allValuesFrom xsd:string
+                   ] ;
+       rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#address
+:address rdf:type owl:DatatypeProperty ;
+         rdfs:domain :University ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :address ;
+                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onDataRange xsd:string
+                     ] ;
+         rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#aims
+:aims rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Course ;
+      rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#assessment
+:assessment rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Course ;
+            rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#content
+:content rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Course ;
+         rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#courseCode
+:courseCode rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Course ;
+            rdfs:range xsd:integer .
+
+
+###  http://www.federatedcourseexplorer.org#courseName
+:courseName rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain :Course ;
+            rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#courseURL
+:courseURL rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Course ;
+           rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#credits
+:credits rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Course ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :credits ;
+                       owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onDataRange xsd:double
+                     ] ;
+         rdfs:range xsd:double .
+
+
+###  http://www.federatedcourseexplorer.org#creditsAmount
+:creditsAmount rdf:type owl:DatatypeProperty ;
+               rdfs:domain :StudyProgram ;
+               rdfs:range xsd:integer .
+
+
+###  http://www.federatedcourseexplorer.org#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :StudyProgram ;
+             rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#duration
+:duration rdf:type owl:DatatypeProperty ;
+          rdfs:domain :StudyProgram ;
+          rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#email
+:email rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Lecturer ,
+                   [ rdf:type owl:Restriction ;
+                     owl:onProperty :email ;
+                     owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                     owl:onDataRange xsd:string
+                   ] ;
+       rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#fullName
+:fullName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty ;
+          rdfs:domain :Lecturer ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :fullName ;
+                        owl:allValuesFrom xsd:string
+                      ] ;
+          rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#prerequisite
+:prerequisite rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Course ;
+              rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#programCode
+:programCode rdf:type owl:DatatypeProperty ;
+             rdfs:domain :StudyProgram ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :programCode ;
+                           owl:allValuesFrom xsd:integer
+                         ] ;
+             rdfs:range xsd:integer .
+
+
+###  http://www.federatedcourseexplorer.org#programName
+:programName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :StudyProgram ;
+             rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#specialization
+:specialization rdf:type owl:DatatypeProperty ;
+                rdfs:domain :StudyProgram ;
+                rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#startingBlock
+:startingBlock rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Course ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :startingBlock ;
+                             owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:integer
+                           ] ;
+               rdfs:range xsd:integer .
+
+
+###  http://www.federatedcourseexplorer.org#studyProgramURL
+:studyProgramURL rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :StudyProgram ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#universityName
+:universityName rdf:type owl:DatatypeProperty ;
+                rdfs:domain :University ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :universityName ;
+                              owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                              owl:onDataRange xsd:string
+                            ] ;
+                rdfs:range xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#universityURL
+:universityURL rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :University ;
+               rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.federatedcourseexplorer.org#Course
+:Course rdf:type owl:Class ;
+        rdfs:subClassOf :StudyProgram ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :teachedBy ;
+                          owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                          owl:onClass :Lecturer
+                        ] .
+
+
+###  http://www.federatedcourseexplorer.org#Lecturer
+:Lecturer rdf:type owl:Class ;
+          rdfs:subClassOf :University ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty :employedBy ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onClass :University
+                          ] .
+
+
+###  http://www.federatedcourseexplorer.org#StudyProgram
+:StudyProgram rdf:type owl:Class ;
+              rdfs:subClassOf :University .
+
+
+###  http://www.federatedcourseexplorer.org#University
+:University rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :employs ;
+                              owl:someValuesFrom :Lecturer
+                            ] ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :offers ;
+                              owl:someValuesFrom :StudyProgram
+                            ] .
+
+
+###  http://www.federatedcourseexplorer.org#4TU
+<http://www.federatedcourseexplorer.org#4TU> rdf:type owl:Class ;
+                                             rdfs:subClassOf :University .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.federatedcourseexplorer.org#Architecture_of_Information_Systems
+:Architecture_of_Information_Systems rdf:type owl:NamedIndividual ,
+                                              :Course ;
+                                     :attendedBy :MSc_Business_Information_Technology ;
+                                     :aims """After completing this course successfully, the students are capable of:
+-explaining the principles and main concepts of architecture of information systems for enterprise integration and enterprise evolution;
+-explaining integration techniques and how to apply them to meet high-level requirements in different enterprise integration cases regarding aspects like reliability, scalability, security, flexibility, and maintenance;
+-applying and evaluating integration techniques;
+-designing an architecture definition document (ADD) for a given case, comprising a baseline architecture for the as-is situation, a target architecture for the proposed to-be situation, a gap analysis of the changes from as-is to to-be, and an impact analysis of the expected effects on the enterprise;
+-explaining the ADD, defending the architectural choices and design decisions to business decision makers and peers."""^^xsd:string ;
+                                     :assessment "Presentation, Project, Report, and Exam"^^xsd:string ;
+                                     :content """Information systems are crucial to enterprises, but they also become increasingly complex. This is caused by competitive pressure on enterprises to offer better products (goods and services), which in turn leads to more sophisticated business processes and information objects to realize the products, and the accumulation of old and new Information Technology (IT) to support the business processes and to handle the information. To deal with complexity, to integrate old and new systems, to accomplish effective and efficient IT support of business processes, and to avoid application silos and information lock-in, we need an architectural approach. This course treats architectural patterns for integrating systems within an enterprise information system, and it includes a project to model an enterprise architecture in which such patterns are applied to satisfy business requirements and contribute to business goals.
+
+Topics covered in the course are: the role of architecture in information systems, IT and enterprise architectures, reference architectures, architecture styles of software systems, client/server architectures, internet-based architectures, middleware technology patterns, and service-oriented enterprise architecture patterns, and smart services."""^^xsd:string ;
+                                     :courseCode 192320111 ;
+                                     :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192320111&cursusInfo=J&collegejaar=2021&aanvangsblok=2B"^^xsd:string ;
+                                     :credits "5.0"^^xsd:double ;
+                                     :prerequisite "Completed TCS or BIT bachelor. No special background knowledge is required, but the Enterprise Architecture course (201400277 and 202001483) is a useful predecessor of this course, especially with respect to the practical assignments of the course. Students who did not follow the Enterprise Architecture course will be provided with self-study material and a short presentation to be able to do the practical assignments."^^xsd:string ;
+                                     :startingBlock 4 .
+
+
+###  http://www.federatedcourseexplorer.org#Delft_University_of_Technology
+:Delft_University_of_Technology rdf:type owl:NamedIndividual ,
+                                         :University ,
+                                         <http://www.federatedcourseexplorer.org#4TU> ;
+                                :offers :MSc_ComputerScience ;
+                                :address "Mekelweg 5, 2628 CD Delft"^^xsd:string ;
+                                :universityName "Delft University of Technology" ;
+                                :universityURL "https://www.tudelft.nl/en/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.B.E._Aysolmaz
+:Dr.B.E._Aysolmaz rdf:type owl:NamedIndividual ,
+                           :Lecturer ;
+                  :ORCID "https://orcid.org/0000-0002-6540-5100"^^xsd:string ;
+                  :email "b.e.aysolmaz@tue.nl"^^xsd:string ;
+                  :fullName "Dr. B.E. Aysolmaz"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.D.A._Tamburri
+:Dr.D.A._Tamburri rdf:type owl:NamedIndividual ,
+                           :Lecturer ;
+                  :ORCID "https://orcid.org/0000-0003-1230-8961"^^xsd:string ;
+                  :email "d.a.tamburri@tue.nl"^^xsd:string ;
+                  :fullName "Dr. D.A. Tamburri"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.D._Bucur
+:Dr.D._Bucur rdf:type owl:NamedIndividual ,
+                      :Lecturer ;
+             :teaches :Managing_Big_Data ;
+             :ORCID "https://orcid.org/0000-0002-7969-2526"^^xsd:string ;
+             :email "d.bucur@utwente.nl"^^xsd:string ;
+             :fullName "Dr. D. Bucur"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.E._Mocanu
+:Dr.E._Mocanu rdf:type owl:NamedIndividual ,
+                       :Lecturer ;
+              :teaches :Machine_Learning_I ;
+              :ORCID "https://orcid.org/0000-0002-0856-579X"^^xsd:string ;
+              :email "e.mocanu@utwente.nl"^^xsd:string ;
+              :fullName "Dr. E. Mocanu"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.G._Dubbelman
+:Dr.G._Dubbelman rdf:type owl:NamedIndividual ,
+                          :Lecturer ;
+                 :teaches :Machine_Learning_I ;
+                 :ORCID "https://orcid.org/0000-0001-6635-3245"^^xsd:string ;
+                 :email "G.Dubbelman@tue.nl"^^xsd:string ;
+                 :fullName "Dr.G. Dubbelman"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ing._G._Englebienne
+:Dr.Ing._G._Englebienne rdf:type owl:NamedIndividual ,
+                                 :Lecturer ;
+                        :employedBy :University_of_Twente ;
+                        :ORCID "https://orcid.org/0000-0002-3130-2082"^^xsd:string ;
+                        :email "g.englebienne@utwente.nl"^^xsd:string ;
+                        :fullName "Dr.Ing. G. Englebienne"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ing._Rachel_Jc_Van_Ooteghem
+:Dr.Ing._Rachel_Jc_Van_Ooteghem rdf:type owl:NamedIndividual ,
+                                         :Lecturer ;
+                                :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                                :ORCID "https://orcid.org/0000-0003-3267-4248"^^xsd:string ;
+                                :email "rachel.vanooteghem@wur.nl"^^xsd:string ;
+                                :fullName "Dr.Ing. Rachel Jc Van Ooteghem"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir.M.J._Van_Sinderen
+:Dr.Ir.M.J._Van_Sinderen rdf:type owl:NamedIndividual ,
+                                  :Lecturer ;
+                         owl:sameAs :Marten_vanSInderen ;
+                         :teaches :Architecture_of_Information_Systems ;
+                         :ORCID "https://orcid.org/0000-0001-7118-1353"^^xsd:string ;
+                         :email "m.j.vansinderen@utwente.nl"^^xsd:string ;
+                         :fullName "Dr.Ir. M.J. Van Sinderen"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir._A._Bert_Van_T_Ooster
+:Dr.Ir._A._Bert_Van_T_Ooster rdf:type owl:NamedIndividual ;
+                             :ORCID "https://orcid.org/0000-0001-6907-0240"^^xsd:string ;
+                             :email "bert.vantooster@wur.nl"^^xsd:string ;
+                             :fullName "Dr.Ir. A. (Bert) Van 'T Ooster"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir._Conny_Jm_Almekinders
+:Dr.Ir._Conny_Jm_Almekinders rdf:type owl:NamedIndividual ,
+                                      :Lecturer ;
+                             :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                             :ORCID "https://orcid.org/0000-0001-9779-5150"^^xsd:string ;
+                             :email "conny.almekinders@wur.nl"^^xsd:string ;
+                             :fullName "Dr.Ir. Conny Jm Almekinders"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir._Jd_Hoogesteger_Van_Dijk_Msc
+:Dr.Ir._Jd_Hoogesteger_Van_Dijk_Msc rdf:type owl:NamedIndividual ,
+                                             :Lecturer ;
+                                    :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                                    :ORCID "https://orcid.org/0000-0002-6784-0552"^^xsd:string ;
+                                    :email "jaime.hoogesteger@wur.nl"^^xsd:string ;
+                                    :fullName "Dr.Ir. Jd Hoogesteger Van Dijk Msc"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir._R.J._Bril
+:Dr.Ir._R.J._Bril rdf:type owl:NamedIndividual ,
+                           :Lecturer ;
+                  :employedBy :Eindhoven_University_of_Technology ;
+                  :ORCID "https://orcid.org/0000-0001-6234-5117"^^xsd:string ;
+                  :email "r.j.bril@tue.nl"^^xsd:string ;
+                  :fullName "Dr.Ir. R.J. Bril"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.Ir._T.A.C._Willemse
+:Dr.Ir._T.A.C._Willemse rdf:type owl:NamedIndividual ,
+                                 :Lecturer ;
+                        :employedBy :Eindhoven_University_of_Technology ;
+                        :ORCID "https://orcid.org/0000-0002-3778-8247"^^xsd:string ;
+                        :email "t.a.c.willemse@tue.nl"^^xsd:string ;
+                        :fullName "Dr.Ir. T.A.C. Willemse"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.J.L._Rebelo_Moreira
+:Dr.J.L._Rebelo_Moreira rdf:type owl:NamedIndividual ,
+                                 :Lecturer ;
+                        :teaches :Architecture_of_Information_Systems ,
+                                 :Linked_Data_and_Semantic_Web ,
+                                 :Service-oriented_Architecture_with_Web_services ;
+                        :ORCID "https://orcid.org/0000-0002-4547-7000"^^xsd:string ;
+                        :email "j.luizrebelomoreira@utwente.nl"^^xsd:string ;
+                        :fullName "Dr. J.L. Rebelo Moreira"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.L._Ferreira_Pires
+:Dr.L._Ferreira_Pires rdf:type owl:NamedIndividual ,
+                               :Lecturer ;
+                      :teaches :Linked_Data_and_Semantic_Web ,
+                               :Service-oriented_Architecture_with_Web_services ;
+                      :ORCID "https://orcid.org/0000-0001-7799-016X"^^xsd:string ;
+                      :email "l.ferreirapires@utwente.nl"^^xsd:string ;
+                      :fullName "Dr. L. Ferreira Pires"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.L._Genga
+:Dr.L._Genga rdf:type owl:NamedIndividual ,
+                      :Lecturer ;
+             :ORCID "https://orcid.org/0000-0001-8746-8826"^^xsd:string ;
+             :email "l.genga@tue.nl"^^xsd:string ;
+             :fullName "Dr. L. Genga"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr.O._Papapetrou
+:Dr.O._Papapetrou rdf:type owl:NamedIndividual ,
+                           :Lecturer ;
+                  :ORCID "https://orcid.org/0000-0003-0477-4399"^^xsd:string ;
+                  :email "o.papapetrou@tue.nl"^^xsd:string ;
+                  :fullName "Dr. O. Papapetrou"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._A._Katsifodimos
+:Dr._A._Katsifodimos rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy :Delft_University_of_Technology ;
+                     :ORCID "https://orcid.org/0000-0002-3913-2786"^^xsd:string ;
+                     :email "A.Katsifodimos@tudelft.nl"^^xsd:string ;
+                     :fullName "Dr. A. Katsifodimos"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._C._Hauff
+:Dr._C._Hauff rdf:type owl:NamedIndividual ,
+                       :Lecturer ;
+              :employedBy :Delft_University_of_Technology ;
+              :ORCID "https://orcid.org/0000-0001-9879-6470"^^xsd:string ;
+              :email "C.Hauff@tudelft.nl"^^xsd:string ;
+              :fullName "Dr. C. Hauff"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Cristina_Furlan
+:Dr._Cristina_Furlan rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                     :ORCID "https://orcid.org/0000-0002-8175-9320"^^xsd:string ;
+                     :fullName "Dr. Cristina Furlan"^^xsd:string ,
+                               "cristina.furlan@wur.nl"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._D_Reyes_Lastiri
+:Dr._D_Reyes_Lastiri rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                     :email "daniel.reyeslastiri@wur.nl"^^xsd:string ,
+                            "https://orcid.org/0000-0002-1526-5891"^^xsd:string ;
+                     :fullName "Dr. D Reyes Lastiri"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._H_Nijveen
+:Dr._H_Nijveen rdf:type owl:NamedIndividual ,
+                        :Lecturer ;
+               :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+               :ORCID "https://orcid.org/0000-0002-9167-4945"^^xsd:string ;
+               :email "harm.nijveen@wur.nl"^^xsd:string ;
+               :fullName "Dr. H Nijveen, B Ict"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Harm_M_Bartholomeus
+:Dr._Harm_M_Bartholomeus rdf:type owl:NamedIndividual ,
+                                  :Lecturer ;
+                         :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                         :email "harm.bartholomeus@wur.nl"^^xsd:string ;
+                         :fullName "Dr. Harm M Bartholomeus"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Ir._Lammert_Kooistra
+:Dr._Ir._Lammert_Kooistra rdf:type owl:NamedIndividual ,
+                                   :Lecturer ;
+                          :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                          :ORCID "https://orcid.org/0000-0001-5549-5993"^^xsd:string ;
+                          :email "lammert.kooistra@wur.nl"^^xsd:string ;
+                          :fullName "Dr. Ir. Lammert Kooistra"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._J.C._Van_Gemert
+:Dr._J.C._Van_Gemert rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy :Delft_University_of_Technology ;
+                     :ORCID "https://orcid.org/0000-0002-3913-2786"^^xsd:string ;
+                     :email "J.C.vanGemert@tudelft.nl"^^xsd:string ;
+                     :fullName "Dr. J.C. Van Gemert"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._J._Kober
+:Dr._J._Kober rdf:type owl:NamedIndividual ,
+                       :Lecturer ;
+              :employedBy :Delft_University_of_Technology ;
+              :ORCID "https://orcid.org/0000-0001-7257-5434"^^xsd:string ;
+              :email "Dr. J. Kober"^^xsd:string ,
+                     "J.Kober@tudelft.nl"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Johannes_Reiche
+:Dr._Johannes_Reiche rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                     :ORCID "https://orcid.org/0000-0002-4327-4349"^^xsd:string ;
+                     :email "johannes.reiche@wur.nl"^^xsd:string ;
+                     :fullName "Dr. Johannes Reiche"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._M._Daneva
+:Dr._M._Daneva rdf:type owl:NamedIndividual ,
+                        :Lecturer ;
+               :teaches :Electronic_Commerce ;
+               :ORCID "https://orcid.org/0000-0002-3042-1450"^^xsd:string ;
+               :email "m.daneva@utwente.nl"^^xsd:string ;
+               :fullName "Dr. M. Daneva"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._M._De_Leoni
+:Dr._M._De_Leoni rdf:type owl:NamedIndividual ,
+                          :Lecturer ;
+                 :employedBy :Eindhoven_University_of_Technology ;
+                 :fullName "Dr. M. De Leoni"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._M_Suarez_Diez
+:Dr._M_Suarez_Diez rdf:type owl:NamedIndividual ,
+                            :Lecturer ;
+                   :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                   :ORCID "https://orcid.org/0000-0001-5845-146X"^^xsd:string ;
+                   :email "maria.suarezdiez@wur.nl"^^xsd:string ;
+                   :fullName "Dr. M Suarez Diez"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Marnix_Medema
+:Dr._Marnix_Medema rdf:type owl:NamedIndividual ,
+                            :Lecturer ;
+                   :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                   :ORCID "https://orcid.org/0000-0002-2191-2821"^^xsd:string ;
+                   :email "marnix.medema@wur.nl"^^xsd:string ;
+                   :fullName "Dr. Marnix Medema"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Nandika_Tsendbazar
+:Dr._Nandika_Tsendbazar rdf:type owl:NamedIndividual ,
+                                 :Lecturer ;
+                        :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                        :ORCID "https://orcid.org/0000-0002-4825-1971"^^xsd:string ;
+                        :email "nandin.tsendbazar@wur.nl"^^xsd:string ;
+                        :fullName "Dr. Nandika Tsendbazar"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._Peter_J_Schaap
+:Dr._Peter_J_Schaap rdf:type owl:NamedIndividual ,
+                             :Lecturer ;
+                    :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                    :ORCID "https://orcid.org/0000-0002-4346-6084"^^xsd:string ;
+                    :email "peter.schaap@wur.nl"^^xsd:string ;
+                    :fullName "Dr. Peter J Schaap"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Dr._T.V._Muntean
+:Dr._T.V._Muntean rdf:type owl:NamedIndividual ,
+                           :Lecturer ;
+                  :employedBy :Eindhoven_University_of_Technology ;
+                  :email "t.v.muntean@tue.nl"^^xsd:string ;
+                  :fullName "Dr. T.V. Muntean"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Eindhoven_University_of_Technology
+:Eindhoven_University_of_Technology rdf:type owl:NamedIndividual ,
+                                             :University ,
+                                             <http://www.federatedcourseexplorer.org#4TU> ;
+                                    :employs :Dr.B.E._Aysolmaz ,
+                                             :Dr.D.A._Tamburri ,
+                                             :Dr.G._Dubbelman ,
+                                             :Dr.L._Genga ,
+                                             :Dr.O._Papapetrou ;
+                                    :offers :MSc_Computer_Science_and_Engineering ;
+                                    :address "5612 AZ Eindhoven"^^xsd:string ;
+                                    :universityName "Eindhoven University of Technology" ;
+                                    :universityURL "https://www.tue.nl/en/education/?gclid=Cj0KCQjw_4-SBhCgARIsAAlegrUSxApfZy3LMIJSJToJoqvV4HTF3DHTtUvrb-nk1wV93zI6PgpDMEoaApmlEALw_wcB"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Electronic_Commerce
+:Electronic_Commerce rdf:type owl:NamedIndividual ,
+                              :Course ;
+                     :attendedBy :MSc_Business_Information_Technology ;
+                     :aims """This course has four primary learning objectives. After successfully completing the course, the students will be able to:
+critically reason about the possible choices in designing an e-business model, by applying a variety of theories. This means being able to (i) identify, document, and evaluate the differences between alternative value-sharing scenarios that implement models in at least three areas, e-business, e-commerce, and e-government, and (ii) judge the strengths and the risks of alternative value-sharing scenarios, from the perspective of each participating actor in a value web.
+apply their knowledge of Gordijn’s e-3-value-modeling method in a practical and analytical manner, in the context of conceptualizing, innovative e-commerce systems and e-businesses.
+synthesize at least two new e-business models by reusing US-patented  ‘business methods’ and adapting them to new contexts.
+comprehend current and future trends in the national EC market as well as worldwide.
+
+To achieve the four learning objectives, this course’s design includes two modules:
+theoretical foundation which helps to explain the mechanics behind real-life businesses (why e-business phenomena happen in the way they do).
+systematic approaches to designing business models, which is aimed at teaching today’s job-market-sought-after skills (e.g. analytical and problem-solving skills) by using increasingly more complex case studies of 21st century companies.
+As the course suggests an interdisciplinary topic, it focuses on the convergence of the paradigms, organizational concepts, modeling approaches, and methods involved in EC and, therefore, it should be of interest to both BIT, CS, and IE&M students."""^^xsd:string ;
+                     :assessment "Exam and assignments"^^xsd:string ;
+                     :content """The E-Commerce course includes an introduction and two selected topics. The introduction covers:
+the concepts of revenue-sharing, design thinking, e-Business, e-Commerce, value-modelling as well as a variety of applications of these concepts;
+strategic issues related to e-Commerce;
+current trends in the EC market in the Netherlands and worldwide.
+The two selected topics are:
+entrepreneurship;
+recommender systems."""^^xsd:string ;
+                     :courseCode 192320501 ;
+                     :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192320501&cursusInfo=J&collegejaar=2021&aanvangsblok=1B"^^xsd:string ;
+                     :credits "5.0"^^xsd:double ;
+                     :prerequisite """Recommended:
+192340101 Implementation of IT in organizations
+201900119 E-Strategizing"""^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Enterprise_Architecture
+:Enterprise_Architecture rdf:type owl:NamedIndividual ,
+                                  :Course ;
+                         :attendedBy :MSc_Business_Information_Technology ;
+                         :aims """To become familiar with the most important Enterprise Architecture (EA) frameworks (e.g. Zachman, ArchiMate, etc.), methodologies (e.g. TOGAF), specification (ArchiMate and other modelling languages), and analysis (qualitative and quantitative) approaches and with their applications in different areas of research and practice (e.g., smart logistics and smart industry, enterprise security and risk management, etc.).
+To be able to formulate a business problem, analyze that problem (using any methods or theories that may have been provided during the BSc or MSc program), translate that problem into an EA change process, and propose a migration strategy from an baseline EA to a target EA that solves the original problem, and is based on a clear motivation for the design decisions taken.
+To apply hybrid EA-data analytics techniques as a means to support decision problems."""^^xsd:string ;
+                         :assessment "Written exam, Case"^^xsd:string ;
+                         :content """Foundations of EA:
+-Core knowledge (delivered through regular lectures)
+-EA Frameworks
+-Development methodologies
+-ArchiMate language and its extensions
+-Relation with other modelling formalisms
+-EA Analysis
+-Modeling tools
+Practical problems & Applications of EA (these might also be discussed during guest lectures):
+Value of architecture
+Relation EA with Business Strategy and Portfolio Management
+Relation EA with BPM and supply chain coordination, in particular in smart logistics
+Relation EA with Software development
+Relation EA with risk management, enterprise security and enterprise resilience
+Advanced topics on EA, e.g., EA and Smart Industry, EA and data analytics etc."""^^xsd:string ;
+                         :courseCode 201400277 ;
+                         :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=201400277&cursusInfo=J&collegejaar=2021&aanvangsblok=1A"^^xsd:string ;
+                         :credits "5.0"^^xsd:double ;
+                         :prerequisite "BIT or IEM Bachelor degree"^^xsd:string ;
+                         :startingBlock 1 .
+
+
+###  http://www.federatedcourseexplorer.org#ICT_Management
+:ICT_Management rdf:type owl:NamedIndividual ,
+                         :Course ;
+                :attendedBy :MSc_Business_Information_Technology ;
+                :aims """The goal of the ICT management course is to educate future managers, so that they are able to make the right decisions on business & ICT management; and in doing so contribute effectively to the desired enterprise performance.
+
+After successful completion of the course, the student is able to:
+Explain and discuss the topics (see the list in the content section) for ICT management;
+Designate and apply the implications of these topics in contemporary organizations;
+Collaborate in a group towards a shared goal. The shared goal is to be able to formulate a proper advise on how to improve IT management in a large organization;
+Analyze a real organizational problem in a group. Present and discuss the findings during a group presentation in the classroom."""^^xsd:string ;
+                :assessment "Group project, Exam"^^xsd:string ;
+                :content """The main topics of this course are ICT management and ICT governance. Alternatives for ICT organizational design and several related topics are discussed.
+Some of the topics which will be discussed during the course are:
+Introduction ICT management: the IT landscape, Run IT, Change IT, IT frameworks, IT standards;
+IT governance: corporate governance, hard governance, soft governance;
+Data and information management: data, information, alignment, the CDO, service management;
+Portfolio management: portfolio types, portfolio analysis, portfolio management;
+Security and privacy: threads, tools, zoning, standards and frameworks;
+IT development methods: waterfall, Agile, DevOps, Lean;
+Conformance: compliance, risk, auditing, control;
+The IT organization: organizational design, decision making structures, sourcing.
+The course takes a practitioner's and academic perspective to ICT management problems and solutions. The literature used in the course are scientific papers and best practice frameworks (four per lesson). Best practice frameworks discussed in the lessons are for example ASL, BiSL, COBIT, COSO, DAMA, ITIL, ISO 27001, P3M3. The papers are discussed based on real life examples and literature. Guest speakers from several organizations are invited to give a presentation on their experience or vision on ICT management."""^^xsd:string ;
+                :courseCode 192360021 ;
+                :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192360021&cursusInfo=J&collegejaar=2021&aanvangsblok=2A"^^xsd:string ;
+                :credits "5.0"^^xsd:double ;
+                :prerequisite "The course is part of the Master's programme \"Business Information Technology\". Candidates with a Bachelor's degree in Business Information Technology, Business Administration (BA), Computer Science (TI), Technische Bedrijfskunde (TBK) / Industrial Engineering & Management (IEM) or a comparable study are admitted."^^xsd:string ;
+                :startingBlock 3 .
+
+
+###  http://www.federatedcourseexplorer.org#Ir._Aldo_R_Bergsma
+:Ir._Aldo_R_Bergsma rdf:type owl:NamedIndividual ,
+                             :Lecturer ;
+                    :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                    :ORCID "https://orcid.org/0000-0002-8254-5535"^^xsd:string ;
+                    :email "aldo.bergsma@wur.nl"^^xsd:string ;
+                    :fullName "Ir. Aldo R Bergsma"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Linked_Data_and_Semantic_Web
+:Linked_Data_and_Semantic_Web rdf:type owl:NamedIndividual ,
+                                       :Course ;
+                              :attendedBy :MSc_Business_Information_Technology ,
+                                          :MSc_Computer_Science ;
+                              :aims """After completing this course successfully, the students are capable of:
+Explaining the principles of Linked Data, comparing and applying the main standards of the Semantic Web stack: RDF, OWL, SPARQL, SHACL
+Explaining, comparing and applying data format standards for Semantic Web applications (RDF serializations): RDF/XML, TTL and JSON-LD 
+Designing and evaluating semantic models by following an ontology engineering methodology for a specific application domain
+Creating Linked Data dataset(s) from scratch and storing in a triplestore
+Reusing existing dataset(s), either from an available triplestore or by converting (“triplifying”) existing non-Linked Data datasets 
+Developing and evaluating a Semantic Web application that is capable of querying different datasets for data analytics"""^^xsd:string ;
+                              :assessment "Written examination; Project Report; Assignments; Presentation(s)"^^xsd:string ;
+                              :content """The Semantic Web (SW) is an extension of the World Wide Web to make Internet data machine-readable in a way that can be consumed and understood by machines. This is supported by standards that are set by the World Wide Web Consortium (W3C), which are organized in the SW stack. Linked Data (LD) are structured data interlinked with other data built upon the SW stack, enabling applications to share information in a way that can be automatically ‘understood’ by computers. Part of the vision of LD is to enable the Internet to behave as a “global database”, so technologies that use the SW standards have a high potential to facilitate web data to be processed by machines. For example, SW technologies, like  semantic triplet databases (also known as “triplestores”), can support the conversion and storage of the original data into knowledge graphs that are useful for Artificial Intelligence systems.
+This course aims at covering the main SW standards and technologies for LD. This is a project-based course offering conventional lectures and hands-on sessions (exercises and project) as main learning activities. During the course, students will apply the acquired knowledge in the practical project that involves the development (programming) of a SW application, including a case analysis, the creation of a new linked data dataset, ‘triplifying’ an existing dataset, linking them for integrated query and data analytics. The main topics of the course are the following:
+Web of data, Linked Data, and Linking Open Data (LOD)
+Semantic Web standards, e.g., RDF, RDF schema, OWL, SPARQL, JSON-LD, SHACL
+Knowledge graphs and basic concepts in logics
+Semantic resources, e.g., popular vocabularies and standards (SSN/SOSA, SAREF, IFO, Bioontology, schema.org)
+Data Analytics, Reasoning, Artificial Intelligence"""^^xsd:string ;
+                              :courseCode 202100263 ;
+                              :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=201200044&cursusInfo=J&collegejaar=2021&aanvangsblok=1B"^^xsd:string ;
+                              :credits "5.0"^^xsd:double ;
+                              :prerequisite "Background knowledge on design science research methodology, and software engineering (design and programming). Specific knowledge on XML/JSON (and their schemas), and RESTful services."^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#M._Loog
+:M._Loog rdf:type owl:NamedIndividual ,
+                  :Lecturer ;
+         :employedBy :Delft_University_of_Technology ;
+         :ORCID "https://orcid.org/0000-0002-1298-8461"^^xsd:string ;
+         :email "M.Loog@tudelft.nl"^^xsd:string ;
+         :fullName "M. Loog"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Bioinformatics
+:MSc_Bioinformatics rdf:type owl:NamedIndividual ,
+                             :StudyProgram ;
+                    :creditsAmount 120 ;
+                    :description "Bioinformatics is a new scientific discipline with roots in computer science, statistics and molecular biology. It was developed to cope with the output of genome sequencing initiatives, that result in an ever-increasing amount of data available about DNA (public databases currently contain over 100 Gigabases of DNA), RNA and derived proteins. Bioinformaticians apply information technology to store, retrieve and manipulate these data and employ statistical methods capable of analysing large amounts of biological data to predict gene functions and to demonstrate the relationship between genes and proteins"^^xsd:string ;
+                    :duration "24 months"^^xsd:string ;
+                    :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/MSc-Bioinformatics.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Biosystems_Engineering
+:MSc_Biosystems_Engineering rdf:type owl:NamedIndividual ,
+                                     :StudyProgram ;
+                            :creditsAmount 120 ;
+                            :description "The master's programme Biosystems Engineering focuses on the development of technology for the production, processing and storage of food and agricultural non-food, management of the rural area, renewable resources and agro-industrial production chains. In all cases it concerns innovation and sustainable technology. The interaction between technology, plants, animals, the environment and society plays a central role. Developments in society at large often involve the development of new technology. The adoption of new technology and its integration within existing processes therefore requires special attention. This is why the programme also offers a course in technology assessment."^^xsd:string ;
+                            :duration "24 months"^^xsd:string ;
+                            :specialization "Farm Technology; Geo information scince & Remote sensing; Mathematical and statistical methods; Information Technology; Environmental Technology; Operations research and logistics; Biobased chemistry and Technology"^^xsd:string ;
+                            :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/msc-biosystems-engineering.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Biotechnology
+:MSc_Biotechnology rdf:type owl:NamedIndividual ,
+                            :StudyProgram ;
+                   :creditsAmount 120 ;
+                   :description "Biotechnology is defined as the industrial exploitation of living organisms or the exploitation of components derived from these organisms. Its practical applications include age-old techniques such as brewing and fermentation, which are still important today. In recent decades, gene modification has revolutionized the biotechnology industry, creating countless new products and improving established processes. More and more types of fermentation are being used, and most new medicines are products of biotechnology. Modern biotechnology has become an applied area of science with a multidisciplinary approach embracing recombinant DNA technology, cellular biology, microbiology, biochemistry, as well as process design, engineering, modelling and control."^^xsd:string ;
+                   :duration "24 months"^^xsd:string ;
+                   :specialization "Cellular and Molecular Biotechnology; Food Biotechnology; Medical Biotechnology; Process Technology; Environmental and Biobased Technology"^^xsd:string ;
+                   :studyProgramURL "https://www.wur.nl/en/education-programmes/master/msc-programmes/msc-biotechnology.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Business_Information_Technology
+:MSc_Business_Information_Technology rdf:type owl:NamedIndividual ,
+                                              :StudyProgram ;
+                                     :attends :Architecture_of_Information_Systems ,
+                                              :Electronic_Commerce ,
+                                              :Enterprise_Architecture ,
+                                              :Managing_Big_Data ,
+                                              :Multi_Agent_Systems ,
+                                              :Service-oriented_Architecture_with_Web_services ;
+                                     :creditsAmount 120 ;
+                                     :description "This two-year, English-taught Master’s offers the perfect balance between business management and IT. You will acquire a keen insight into complex business processes and organisations as well as in-depth knowledge of modern information systems and their underlying technologies. Through the latest scientific insights, you will gain expertise in areas such as IT architecture, IT-based business models, enterprise security, smart industry, data-driven decision support systems and IT management."^^xsd:string ;
+                                     :duration "24 months"^^xsd:string ;
+                                     :programCode 60025 ;
+                                     :specialization "Data Science and Business; Enterprise Architecture & IT management"^^xsd:string ;
+                                     :studyProgramURL "https://www.utwente.nl/en/education/master/programmes/computer-science/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_ComputerScience
+:MSc_ComputerScience rdf:type owl:NamedIndividual ,
+                              :StudyProgram ;
+                     :creditsAmount 120 ;
+                     :description "The MSc programme in Computer Science is built on the strengths and innovative power of our research groups. The programme will provide students with the flexibility to focus on ‘Data Science and Technology’,  ‘Software Technology’ and/ or ‘Artificial Intelligence Technology’, while giving them a broad basis so that they will be equipped to continue innovation in the future. The first year comprises theoretical study, assignments and laboratory work. Students gain in-depth knowledge on fundamental techniques, methodologies and theories that help them to define their field of interest. The second year is largely devoted to specialisation and the graduation project, which involves participating in advanced research or design projects in an academic or industrial environment, in this country or abroad."^^xsd:string ;
+                     :duration "24 months"^^xsd:string ;
+                     :specialization "Data Science & Technology; Software Technology; Artificial Intelligence Technology."^^xsd:string ;
+                     :studyProgramURL "https://www.tudelft.nl/onderwijs/opleidingen/masters/cs/msc-computer-science"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Computer_Science
+:MSc_Computer_Science rdf:type owl:NamedIndividual ,
+                               :StudyProgram ;
+                      :attends :Architecture_of_Information_Systems ,
+                               :Linked_Data_and_Semantic_Web ,
+                               :Machine_Learning_I ,
+                               :Mobile_and_Wireless_Networking ,
+                               :Service-oriented_Architecture_with_Web_services ;
+                      :creditsAmount 120 ;
+                      :description "During this two-year, English-taught Master’s in Computer Science, you will engage in the in-depth study of wireless and sensor systems, computer security, data science or methods for reliability. At the same time, you will focus on more fundamental aspects of information technology, such as software engineering and information systems. Many students are co-authors of scientific reports, for example for the Digital Society Insitute."^^xsd:string ;
+                      :duration "24 months"^^xsd:string ;
+                      :programCode 60300 ;
+                      :specialization "Cyber Security; Data Science and Technology; Software Technology; Internet Science and Technology"^^xsd:string ;
+                      :studyProgramURL "https://www.utwente.nl/en/education/master/programmes/business-information-technology/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Computer_Science_and_Engineering
+:MSc_Computer_Science_and_Engineering rdf:type owl:NamedIndividual ,
+                                               :StudyProgram ;
+                                      :creditsAmount 120 ;
+                                      :description "This program equips you with knowledge of algorithms, performance, hardware, and design and documentation methods. You will be able to apply this to create reliable protocols for the behavior of complex software systems. As a master-level graduate, you will be able to play a leading role in the development of your specialist field, whether in scientific research, in industry, in commercial businesses or in (government) organizations."^^xsd:string ;
+                                      :duration "24 months"^^xsd:string ;
+                                      :specialization "Information Security Technology; Data Science in Engineering"^^xsd:string ;
+                                      :studyProgramURL "https://www.tue.nl/en/education/graduate-school/master-computer-science-and-engineering/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Development_and_Rural_Innovation
+:MSc_Development_and_Rural_Innovation rdf:type owl:NamedIndividual ,
+                                               :StudyProgram ;
+                                      :creditsAmount 120 ;
+                                      :description "The MSc Development and Rural Innovation is a two-year social sciences programme designed especially for students with a technical, life sciences or relevant management background and an interest in international development. You will learn to understand social aspects of transformation and deal with knowledge processes in dynamic contexts worldwide"^^xsd:string ;
+                                      :duration "24 months"^^xsd:string ;
+                                      :specialization "Communication and Innovation Studies; Technology and Development Studies; Sociology of Development; Rural Sociology"^^xsd:string ;
+                                      :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/MSc-Development-and-Rural-Innovation.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Electrical_Engineering
+:MSc_Electrical_Engineering rdf:type owl:NamedIndividual ,
+                                     :StudyProgram ;
+                            :creditsAmount 120 ;
+                            :description "This Master's challenges you to develop new methods and technologies for high-tech electronics-based systems in nanotechnology, robotics, electronics, power electronics, radio or biomedical systems and make the next step to our all future."^^xsd:string ;
+                            :duration "24 months"^^xsd:string ;
+                            :programCode 60353 ;
+                            :specialization "Biomedical applications; Communication; Energy systems; IC Design/computer architecture; Image and signal processing; Mechatronics; Microsystems"^^xsd:string ;
+                            :studyProgramURL "https://www.utwente.nl/en/education/master/programmes/electrical-engineering/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Geo-Information_Science
+:MSc_Geo-Information_Science rdf:type owl:NamedIndividual ,
+                                      :StudyProgram ;
+                             :creditsAmount 120 ;
+                             :description "The increasing complexity of our society demands for specialists who can collect, manage, analyse and present spatial data using state-of-the-art methods and tools. At Wageningen University & Research we offer a unique, top-quality programme that blends geo-information science methods, technologies and applications within environmental and life sciences for a changing world. Our Geo-Information Science graduates usually have a job waiting for them on graduation."^^xsd:string ;
+                             :duration "24 months"^^xsd:string ;
+                             :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/MSc-Geo-Information-Science.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Interaction_Technology
+:MSc_Interaction_Technology rdf:type owl:NamedIndividual ,
+                                     :StudyProgram ;
+                            :creditsAmount 120 ;
+                            :description "Are you eager to develop pioneering interactive technologies, while also engaging with societal needs, customers and end-users? Are you as excited about computer science, human-computer interaction, Artificial Intelligence, interactive systems or electrical engineering as you are about analysing human behaviour and exploring user contexts? Are you passionate about developing, presenting and rolling out technological solutions to fulfill the real needs and wants of people and society? Then our two-year, English-taught Master’s in Interaction Technology may be the right choice for you."^^xsd:string ;
+                            :duration "24 months"^^xsd:string ;
+                            :programCode 60030 ;
+                            :studyProgramURL "https://www.utwente.nl/en/education/master/programmes/interaction-technology/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_International_Land_and_Water_Management
+:MSc_International_Land_and_Water_Management rdf:type owl:NamedIndividual ,
+                                                      :StudyProgram ;
+                                             :creditsAmount 120 ;
+                                             :description "Are you interested in developing plans for sustainable crop production on healthy soils with local farmers in Burundi? Would you like to investigate how the growing thirst of Lima threatens the livelihoods of Andean farmers? Or would you like to be involved in the co-creation of scenarios for sustainable use of the flood plains of the Rhine in the Netherlands? The two-year MSc program International Land & Water Management explores these kind of land and water management issues at different scales. You learn to unravel the complex questions by combining insights from physical, technical and social sciences and by integrating non-academic knowledge, and you will find out that there are no ‘one size fits all’ answers and solutions. With your problem-oriented attitude and interdisciplinary background you will become a relevant connecting player in today’s and tomorrow’s land and water management challenges."^^xsd:string ;
+                                             :duration "24 months"^^xsd:string ;
+                                             :specialization "Sustainable Land Management; Water, Society and Technology; Adaptive Water Management"^^xsd:string ;
+                                             :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/MSc-International-Land-and-Water-Management.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#MSc_Plant_Biotechnology
+:MSc_Plant_Biotechnology rdf:type owl:NamedIndividual ,
+                                  :StudyProgram ;
+                         :creditsAmount 120 ;
+                         :description "Plants form the basis of life as they convert sunlight into an inexhaustible source of food and renewable raw materials. Plants also have a stabilising effect in (agro) ecosystems, a landscape function and ornamental value. In a nutshell, we can't do without plants. Modern molecular biology has opened up a whole new range of techniques and possibilities to scientists working in the different fields of the classical plant sciences (e.g. plant physiology, plant breeding, plant pathology). The combination of these disciplines forms a challenging domain: Plant Biotechnology."^^xsd:string ;
+                         :duration "24 months"^^xsd:string ;
+                         :specialization "Functional Plant Genomics; Plants for Human and Animal Health; Molecular Plant Breeding and Pathology"^^xsd:string ;
+                         :studyProgramURL "https://www.wur.nl/en/Education-Programmes/master/MSc-programmes/MSc-Plant-Biotechnology.htm"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Machine_Learning_I
+:Machine_Learning_I rdf:type owl:NamedIndividual ,
+                             :Course ;
+                    :attendedBy :MSc_Computer_Science ;
+                    :aims """After completing this course successfully, the student can:
+Describe and compare basic machine learning methods and techniques, associated complexity and the application domain. Theories and techniques include: Bayesian classification theory, Decision Trees, Linear Discrimination, Neural Networks, Support Vector Machines.
+Design, implement and systematically evaluate machine learning methods and models."""^^xsd:string ;
+                    :assessment "Homework Assignments; Practical Assignments; Written exam"^^xsd:string ;
+                    :content "The course is an in-depth introduction to the theory and practicalities of Machine Learning (ML), in which the emphasis is on an overview of the various techniques, their workings, associated complexity and application domains. We  also look into the theoretical aspects of machine learning techniques, such as over- and under-fitting and the Bias/Variance Dilemma.  Emphasis is on basic ML models, on methodology (how to achieve reliable models systematically) and the evaluation of the learnt/trained models."^^xsd:string ;
+                    :courseCode 201600070 ;
+                    :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=201600070&cursusInfo=J&collegejaar=2021&aanvangsblok=1A"^^xsd:string ;
+                    :credits "5.0"^^xsd:double ;
+                    :prerequisite """Working knowledge in probability theory and statistics. This is covered in the course Probability Theory (191530062), or equivalent.
+Basic working knowledge in linear algebra
+Knowledge about basic AI formalisms for defining and solving problems: search, representation of knowledge, reasoning, learning and reasoning under uncertainty. This is covered in the bachelors course Artificial Intelligence (192140302)."""^^xsd:string ;
+                    :startingBlock 1 .
+
+
+###  http://www.federatedcourseexplorer.org#Managing_Big_Data
+:Managing_Big_Data rdf:type owl:NamedIndividual ,
+                            :Course ;
+                   :attendedBy :MSc_Business_Information_Technology ,
+                               :MSc_Computer_Science ;
+                   :aims """After successful completion of the course, the student is able to:
+• Design large scale storage for industrial, data-intensive applications (for instance GMail, Facebook);
+• Design solutions for processing large data streams (for instance the Twitter stream);
+• Implement distributed data processing programs in MapReduce algorithms;
+• Implement distributed processing programs for big data in Spark programs over a Hadoop infrastructure;
+• Implement complex analytical queries in query languages such as Spark SQL;
+• Configure, execute and debug programs over the Hadoop framework."""^^xsd:string ;
+                   :assessment "Written exam; Assignment"^^xsd:string ;
+                   :content "Big data is a term introduced in the early 2000s to refer to data sets whose size grew beyond the ability of the software tools of that time to process, typically in the order of many terabytes or petabytes for a single dataset. Big data sets are encountered by software architects in for instance web search and social media, by scientists in for instance meteorology and genomics, and by analysts in for instance finance and business informatics. The course will closely follow developments to manage big data on large clusters of commodity machines, initiated by Google, and followed by many other web companies such as Yahoo, Amazon, Facebook, Spotify, Twitter, etc. Big data gives rise to a redesign of many core computer science concepts: The course discusses file systems (Google FS), programming paradigms (MapReduce), programming languages and query languages (Spark), 'noSQL' database paradigms (for instance Google's BigTable) for managing big data, and solutions for managing streaming data (for instance Twitter's Storm).  The course consists of lectures and practical assignments. Students will solve real world, large-scale problems as lab exercises, and they get the opportunity to access the University of Twente Hadoop computing clusters. Examples of lab exercises are: counting words in large web crawls, inverted index construction, the computation of Google's PageRank, analyzing Twitter streams, and designing a storage layer for GMail clones."^^xsd:string ;
+                   :courseCode 201200044 ;
+                   :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=201200044&cursusInfo=J&collegejaar=2021&aanvangsblok=1B"^^xsd:string ;
+                   :credits "5.0"^^xsd:double ;
+                   :prerequisite """The programming in this course is done in Python, and basic ability with this language is assumed.
+Basic BSc-level modules or courses in Programming, Networks and Operating Systems (Unix), and Databases are required (our UT Module 1 Pearls of Computer Science can be sufficient)."""^^xsd:string ;
+                   :startingBlock 2 .
+
+
+###  http://www.federatedcourseexplorer.org#Maria_Iacob
+:Maria_Iacob rdf:type owl:NamedIndividual ;
+             owl:sameAs :Prof.Dr._M.E._Iacob .
+
+
+###  http://www.federatedcourseexplorer.org#Marten_vanSInderen
+:Marten_vanSInderen rdf:type owl:NamedIndividual .
+
+
+###  http://www.federatedcourseexplorer.org#Mobile_and_Wireless_Networking
+:Mobile_and_Wireless_Networking rdf:type owl:NamedIndividual ,
+                                         :Course ;
+                                :attendedBy :MSc_Business_Information_Technology ;
+                                :assessment "Written exam"^^xsd:string ;
+                                :content "This course concentrates on networking aspects of wireless and mobile technologies. The course will provide fundamental insight into a large range of networking problems associated to wireless and mobile communications, e.g., medium access control, handover-techniques, hand-over, mobility management, and ad-hoc routing, For a good understanding of these networking problems, the course will also briefly review wireless communications aspects such as signal propagation, modulation, and multiplexing. Part of this subject is devoted to the description of different existing and future technologies, like LTE, 5G, Wireless LANs, Bluetooth, Zigbee and AODV. Some lectures are dedicated to advanced subjects, such as ad hoc networking and vehicular networking."^^xsd:string ;
+                                :courseCode 192620010 ;
+                                :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192620010&cursusInfo=J&collegejaar=2021&aanvangsblok=2A"^^xsd:string ;
+                                :credits "5.0"^^xsd:double ;
+                                :prerequisite "Basic knowledge about communication networks (concepts like packets, layering, basics of TCP/IP protocol, etc.). This is covered in any bachelor course in Computer Networks. At the UT, this is covered in the bachelor module Network Systems."^^xsd:string ;
+                                :startingBlock 3 .
+
+
+###  http://www.federatedcourseexplorer.org#Multi_Agent_Systems
+:Multi_Agent_Systems rdf:type owl:NamedIndividual ,
+                              :Course ;
+                     :attendedBy :MSc_Business_Information_Technology ,
+                                 :MSc_Interaction_Technology ;
+                     :aims """After completion of the course,
+The student understands and is able to apply multi agent systems including as agent architectures, interaction, intelligence, negotiation and communication.
+The student is able to analyze a real world case and apply multi-agent concepts to capture this in a Multi Agent model.
+The student understands seminal and novel scientific studies in the multi-agent domain.
+The student will be able to analyze opportunities and barriers of implementing multi-agent techniques in practice and evaluate the effectiveness to alternative approaches.
+The student will gain experience in creating multi-agent systems by conducting research by choosing an appropriate research question, agent design methodology and implementation platform.
+The student will be able to design and implement a basic multi-agent system using design science methods and learn how to report and reflect on multi-agent systems. Working in a small group, the student will produce and present a scientific paper on the project in English."""^^xsd:string ;
+                     :assessment "Exam and research paper"^^xsd:string ;
+                     :content "Multi agent systems offer a powerful way to design and implement systems that can be applied to complex real world problems in which no central authority is prevalent. In many real life cases, actors have autonomy to make decisions, have emergent behavior, respond to changes in the environment and learn over time. Think of citizen mobility in smart cities, flows of goods in global supply chains, migration of workers across regions, consumption of electricity in smart grids, etc.etc. Also recent challenges such as the C19 pandemic and response of people to various policies have been studied with multi agent systems. The multi agent paradigm offers a set of concepts to model and build systems that can be used to research and facilitate multi actor and decentral systems. Elements of Artificial Intelligence are also applied in multi-agent systems to implement adaptive behavior of individual agents."^^xsd:string ;
+                     :courseCode 192320601 ;
+                     :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192320601&cursusInfo=J&collegejaar=2021&aanvangsblok=1A"^^xsd:string ;
+                     :credits "5.0"^^xsd:double ;
+                     :prerequisite "None"^^xsd:string ;
+                     :startingBlock 1 .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr.Ir._D_De_Ridder
+:Prof.Dr.Ir._D_De_Ridder rdf:type owl:NamedIndividual ,
+                                  :Lecturer ;
+                         :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                         :ORCID "https://orcid.org/0000-0002-4944-4310"^^xsd:string ;
+                         :email "Dick.deRidder@wur.nl"^^xsd:string ;
+                         :fullName "Prof.Dr.Ir. D De Ridder"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr.Ir._G.J._Heijenk
+:Prof.Dr.Ir._G.J._Heijenk rdf:type owl:NamedIndividual ,
+                                   :Lecturer ;
+                          :employedBy :University_of_Twente ;
+                          :teaches :Mobile_and_Wireless_Networking ;
+                          :ORCID "https://orcid.org/0000-0002-1911-6324"^^xsd:string ;
+                          :email "geert.heijenk@utwente.nl"^^xsd:string ;
+                          :fullName "Prof.Dr.Ir. G.J. Heijenk"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr.Ir._Ra_Boelens
+:Prof.Dr.Ir._Ra_Boelens rdf:type owl:NamedIndividual ,
+                                 :Lecturer ;
+                        :employedBy <http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> ;
+                        :ORCID "https://orcid.org/0000-0002-8412-3109"^^xsd:string ;
+                        :email "rutgerd.boelens@wur.nl"^^xsd:string ;
+                        :fullName "Prof.Dr.Ir. Ra Boelens"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr._A.E._Zaidman
+:Prof.Dr._A.E._Zaidman rdf:type owl:NamedIndividual ,
+                                :Lecturer ;
+                       :employedBy :Delft_University_of_Technology ;
+                       :ORCID "https://orcid.org/0000-0003-2413-3935"^^xsd:string ;
+                       :email "A.E.Zaidman@tudelft.nl"^^xsd:string ;
+                       :fullName "Prof.Dr. A.E. Zaidman"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr._A._Van_Deursen
+:Prof.Dr._A._Van_Deursen rdf:type owl:NamedIndividual ,
+                                  :Lecturer ;
+                         :employedBy :Delft_University_of_Technology ;
+                         :ORCID "https://orcid.org/0000-0003-4850-3312"^^xsd:string ;
+                         :email "Arie.vanDeursen@tudelft.nl"^^xsd:string ;
+                         :fullName "Prof.Dr. A. Van Deursen"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr._J._Van_Hillegersberg
+:Prof.Dr._J._Van_Hillegersberg rdf:type owl:NamedIndividual ,
+                                        :Lecturer ;
+                               :employedBy :University_of_Twente ;
+                               :teaches :ICT_Management ,
+                                        :Multi_Agent_Systems ;
+                               :ORCID "https://orcid.org/0000-0002-3042-1450"^^xsd:string ;
+                               :email "j.vanhillegersberg@utwente.nl"^^xsd:string ;
+                               :fullName "Prof.Dr. J. Van Hillegersberg"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Prof.Dr._M.E._Iacob
+:Prof.Dr._M.E._Iacob rdf:type owl:NamedIndividual ,
+                              :Lecturer ;
+                     :employedBy :University_of_Twente ;
+                     :teaches :Enterprise_Architecture ;
+                     :ORCID "https://orcid.org/0000-0002-4004-0117"^^xsd:string ;
+                     :email "m.e.iacob@utwente.nl"^^xsd:string ;
+                     :fullName "Prof.Dr. M.E. Iacob"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Service-oriented_Architecture_with_Web_services
+:Service-oriented_Architecture_with_Web_services rdf:type owl:NamedIndividual ,
+                                                          :Course ;
+                                                 :attendedBy :MSc_Business_Information_Technology ,
+                                                             :MSc_Computer_Science ;
+                                                 :aims """After completing this course successfully, the students are capable of:
+explaining and applying the SOA principles and web services protocols and concepts;
+explaining and addressing the goals and challenges of distributed commercial applications with web services technology;
+implementing and integrating applications of average complexity with web service technology;
+critically evaluating new developments in SOA and Web services technology."""^^xsd:string ;
+                                                 :assessment "Exam, Project deliverables, Presentation"^^xsd:string ;
+                                                 :content """This course covers the use of web services technology for building distributed commercial applications that may be distributed over several companies. This course discusses how web services technology can be used to support the principles and goals of service-oriented architecture. It covers architectural principles that are the foundations of the service-oriented paradigm and gives students practical experience with applying web services in commercial applications. The focus of this course is on service-oriented architecture. The course consists of two parts. The first part is about the SOA principles and the second part about the integration of applications with web services. This course includes a project about the automation of a fictitious company, in which the students apply the knowledge they have obtained during the course. Concepts discussed in this course are, amongst others: service-oriented architecture principles, distributed applications and middleware, communication standards (SOAP/WSDL, RESTful services, GraphQL), data formats (XML, JSON, YAML, RDF), transfer protocols (message queues, WebSockets, AS2) service composition, service deployment (Docker, Kubernetes) and microservices.
+Active participation in the work sessions is a prerequisite for getting access to the final exam. The project is mandatory to get a final mark for this course."""^^xsd:string ;
+                                                 :courseCode 192652150 ;
+                                                 :courseURL "https://osiris.utwente.nl/student/OnderwijsCatalogusToonCursus.do?cursuscode=192652150&cursusInfo=J&collegejaar=2021&aanvangsblok=2A"^^xsd:string ;
+                                                 :credits "5.0"^^xsd:double ;
+                                                 :prerequisite "Module 2 Software systems / Java programming."^^xsd:string ;
+                                                 :startingBlock 3 .
+
+
+###  http://www.federatedcourseexplorer.org#University_of_Twente
+:University_of_Twente rdf:type owl:NamedIndividual ,
+                               :University ,
+                               <http://www.federatedcourseexplorer.org#4TU> ;
+                      :employs :Dr.D._Bucur ,
+                               :Dr.E._Mocanu ,
+                               :Dr.Ir.M.J._Van_Sinderen ,
+                               :Dr.J.L._Rebelo_Moreira ,
+                               :Dr.L._Ferreira_Pires ,
+                               :Dr._M._Daneva ;
+                      :offers :MSc_Business_Information_Technology ,
+                              :MSc_Computer_Science ,
+                              :MSc_Electrical_Engineering ,
+                              :MSc_Interaction_Technology ;
+                      :address "Drienerlolaan 5, 7522 NB Enschede"^^xsd:string ;
+                      :universityURL "https://www.utwente.nl/en/"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Z._Erkin
+:Z._Erkin rdf:type owl:NamedIndividual ,
+                   :Lecturer ;
+          :employedBy :Delft_University_of_Technology ;
+          :ORCID "https://orcid.org/0000-0001-8932-4703"^^xsd:string ;
+          :email "Z.Erkin@tudelft.nl"^^xsd:string ;
+          :fullName "Z. Erkin"^^xsd:string .
+
+
+###  http://www.federatedcourseexplorer.org#Wageningen_University_&_Research
+<http://www.federatedcourseexplorer.org#Wageningen_University_&_Research> rdf:type owl:NamedIndividual ,
+                                                                                   :University ,
+                                                                                   <http://www.federatedcourseexplorer.org#4TU> ;
+                                                                          :offers :MSc_Bioinformatics ,
+                                                                                  :MSc_Biosystems_Engineering ,
+                                                                                  :MSc_Biotechnology ,
+                                                                                  :MSc_Development_and_Rural_Innovation ,
+                                                                                  :MSc_Geo-Information_Science ,
+                                                                                  :MSc_International_Land_and_Water_Management ,
+                                                                                  :MSc_Plant_Biotechnology ;
+                                                                          :address "6708 PB Wageningen"^^xsd:string ;
+                                                                          :universityName "Wageningen University & Research" ;
+                                                                          :universityURL "https://www.wur.nl/en/wageningen-university.htm"^^xsd:string .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :MSc_ComputerScience
+                        :MSc_Computer_Science
+                      )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
